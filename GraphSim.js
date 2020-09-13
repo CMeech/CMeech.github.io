@@ -1631,21 +1631,21 @@ class SimController{
 let sim; //the outer object
 
 function preload(){
-    backgroundText = loadImage('http://127.0.0.1:8887/images/backgroundtext.png');
-    vertexTexture = loadImage('http://127.0.0.1:8887/images/vertextext.png');
-    vertexTextureSel = loadImage('http://127.0.0.1:8887/images/vertextextsel.png');
-    burnedTexture = loadImage('http://127.0.0.1:8887/images/burned.png');
-    burnedTextureSel = loadImage('http://127.0.0.1:8887/images/burnedsel.png');
-    addText = loadImage('http://127.0.0.1:8887/images/add.png');
-    delText = loadImage('http://127.0.0.1:8887/images/delete.png');
-    edgeText = loadImage('http://127.0.0.1:8887/images/edge.png');
-    algText = loadImage('http://127.0.0.1:8887/images/alg.png');
-    nextText = loadImage('http://127.0.0.1:8887/images/next.png');
-    backText = loadImage('http://127.0.0.1:8887/images/back.png');
-    fiftyText = loadImage('http://127.0.0.1:8887/images/50.png');
-    twentyText = loadImage('http://127.0.0.1:8887/images/20.png');
-    fiveText = loadImage('http://127.0.0.1:8887/images/5.png');
-    oneText = loadImage('http://127.0.0.1:8887/images/1.png');
+    backgroundText = loadImage('https://i.imgur.com/oVX5j1D.png');
+    vertexTexture = loadImage('https://i.imgur.com/BUiZQUQ.png');
+    vertexTextureSel = loadImage('https://i.imgur.com/Et4TpDp.png');
+    burnedTexture = loadImage('https://i.imgur.com/Ok6cv8c.png');
+    burnedTextureSel = loadImage('https://i.imgur.com/FrKvrmI.png');
+    addText = loadImage('https://i.imgur.com/DI2ecNn.png');
+    delText = loadImage('https://i.imgur.com/hWUNvn3.png');
+    edgeText = loadImage('https://i.imgur.com/3QmWvAZ.png');
+    algText = loadImage('https://i.imgur.com/AmSFP8O.png');
+    nextText = loadImage('https://i.imgur.com/ep8y7iK.png');
+    backText = loadImage('https://i.imgur.com/lBho1K5.png');
+    fiftyText = loadImage('https://i.imgur.com/SG3YRP9.png');
+    twentyText = loadImage('https://i.imgur.com/hBtV21V.png');
+    fiveText = loadImage('https://i.imgur.com/1ogH2Fj.png');
+    oneText = loadImage('https://i.imgur.com/29ykvwg.png');
 
     //must define color constants here
 
