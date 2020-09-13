@@ -7,7 +7,7 @@
  * See documentation in the notes.txt file.
  * 
  * Unit Coords are [-1,1]
- * 
+ * /
  */
 
 "use strict";
