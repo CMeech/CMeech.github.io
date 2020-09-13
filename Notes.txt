@@ -1,0 +1,336 @@
+//////////////////////////////////////////////////////////////////
+//			GRAPH BURNING SIM
+//
+// NOTES DOCUMENTING THE CREATION OF THE PROGRAM, NOTABLY PROBLEMS
+// AND THOUGHTS
+//
+// AUTHOR: CASSIUS MEECHES
+// 
+//////////////////////////////////////////////////////////////////
+
+FIRST QUESTIONS: AUGUST 4, 2020
+
+1. When graphs are randomly generated, what are the positions of
+   the nodes? Should they all be within the view, or can they be
+   outside of the range [-1,1] of the coordinate system?
+
+	ANSWER: No random generation right now, but you can change it
+		in the source code as I left it
+
+2. How should we store the Graph ADT?
+
+	ANSWER: We could store the vertices in numerical order. Since
+		the size must be adjusted but need fast access, could
+		use an ArrayList for the Vertex objects which will
+		really only hold the position relative to the world
+		coordinate system. We can use an adjacency matrix to
+		store the edges (and ultimately draw them quickly).
+
+3. Need to define the objects interacting with one another. Should
+   have some sort of Controller class that communicates with the graph.
+   Should probably have some class that can interact with the graph and
+   draw the necessary objects.
+
+	ANSWER: See below for class/object interaction schema.
+
+4. The user interface should be drawn last and independently of
+   the graph's graphics.
+
+	ANSWER: Probably define the GUI inside the object that draws
+		the graphs as well. The data will be seperate.
+
+5. Are the vertices movable? Dragging is possible but may be a pain.
+   Maybe just include arrows? But this is kind of lazy.
+   Draggable vertices will require lots of conversion between mouse
+   coordinates and world coordinates.
+
+	ANSWER: No, became too much of pain to use.
+
+6. Is zooming allowed? Probably a good idea but will make hit detection
+   much more complex.
+
+	ANSWER: Worked flawlessly using matrices.
+
+7. Controller should probably handle events like mouse clicks, etc.
+
+WORK COMPLETED:
+	- Finally able to get JS to run in an html hosted page.
+	- P5.js library is working properly.
+	- Created some skeleton classes in JS.
+
+
+TO-DO:
+	- Infinite background like Photoshop using a texture.
+	  Must be able to move with the mouse drags!
+	  Where should this background be stored?
+
+---------------------------------------------------------------
+CLASSES REQUIRED AS OF RIGHT NOW:
+
+GraphSim.js - The main program.
+Graph.js - Defines the graph ADT.
+Shape.js - Defines the interface/data for a drawable object.
+Vertex.js - Will extend Shape and include data for vertices (position).
+	    Use an ArrayList for each vertex to store the stages.
+	    Use a data type that is very small, like booleans.
+UserInterface.js - for the GUI
+
+
+Shapes will use polymorphism.
+---------------------------------------------------------------
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+August 5
+
+First: Let's get the background done.
+
+P5 won't even load an image as a texture. Who knows what is going
+on when it fetches the image. Using different images yields different
+colors, so it must be stretching it.
+
+Work done:
+
+	- Started UserInterface.js and the infinite textured background.
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+August 8
+
+So, after much research looking back at old stuff, found out why
+textures weren't working. I was being a moron and forgot about
+two things:
+
+- When Calling ortho(), we have to use resetMatrix() before drawing
+	any geometry.
+
+- When applying textures, we have to give the vertices uv coordinates
+  so the textures can be given barycentric coordinates based on the
+  s,t coordinates!
+
+Work Done:
+
+	- Background finally has texture!
+	- Background can now be dragged infinitely!
+
+	- Turns out text is not really supported in WebGL very much.
+	  Having many problems so we'll ignore text I guess..
+	  Will have to photoshop for the UI.
+
+	- Clicking for Vertices is now working, along with drawing
+          them.
+
+	- Have to write the program in one file, will fix this later.
+
+
+To Do:
+
+	- Create the Graph ADT, prepare it so it can perform algs.
+          This means creating some sort of adjacency matrix maybe.
+	  Will also need to draw the lines between vertices.
+
+	- Hit detection still needs to include world transformations
+          as a factor such as scale and translation for larger graphs!
+
+Around 6 hours done today, unlike the usual 3.
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+August 9
+
+Don't forget push and pop!
+Also, recall that matrix multiplication is POST MULTIPLIED, [T3 * T2 * T1 * M]
+so the most bottom transformation is applied first!
+
+Work Done:
+	- Translating and Zooming now works with full hit detection
+	  of vertices.
+
+	- Can now only select one vertex properly.
+
+To Do:
+	- Can make the vertices draw the edges since they know they're
+	neighbors.
+
+	- Need to work on UI photoshop stuff.
+
+	- Need to add functionality to add vertices to a graph. 
+
+	- Probably don't need an adj matrix
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+August 30
+
+The background wasn't using push and pop and thus the translation
+stuff wasn't right. This fix allowed lines to be drawn and probably
+other shapes that working before.
+
+
+*****IMPORTANT*******
+For some reason, beginShape() is not working with parameters like
+QUADS. But LINES seems to work.
+Generally need to use beginShape() with no parameters and
+endShape(CLOSE).
+
+Work Done:
+	- Now draws edges (however overlapping is an issue with OpenGL)
+
+To Do:
+	
+	- Vertex selections is now in the proper order.
+
+	- Geometry for the UI is done. Needs text to be drawn now.
+	  Most likely will need to photoshop all of it and draw
+	  it as a texture! (Preferably draw in a method, don't put
+	  in the list of shapes?)
+
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+August 31
+
+Cannot delete edges since they aren't clickable, but can add them.
+
+Making vertices moveable along with the background proves to be
+a tough challenge. Will omit it for now.
+
+Work Done:
+	- Text is added to the buttons. Also, their clicking
+	  functionality now works.
+
+	- Graphics for the GUI are pretty much done. All that's
+	  left is the burning vertices to be drawn differently.
+
+To Do:
+	- Might need an enum to handle all of the possible button
+	  outputs for checkHit().
+
+	- Time to start some actual algorithm stuff most likely.
+
+	- Decision making for the GUI needs to be finished.
+	  i.e. Adding Vertices, Deleting, etc.
+
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+September 1
+
+So deleting works by selecting a vertex THEN pressing the DELETE button.
+
+Whereas one must press the ADD button first then click, and this click must
+not hit ANY other shapes.
+
+
+Work Done:
+
+	- Turned off warnings in P5.js since they were terrible.
+	  Textures were power of two and it worked, so why warnings?
+
+	- Deleting and Adding have been somewhat added, as they now
+	  have functionality, but it doesn't work right. Probably because I
+	  added so much code and it hasn't been tested.
+
+To Do:
+
+	- Finishing adding/deleting.
+	- Finish GUI decision making.
+	- Finish burning algorithm / steps implementation!
+
+
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+September 2
+
+Deleting wasn't working since I forgot to add the unique ID's to
+the vertices. Problem Solved.
+
+
+Work Done:
+
+	- Adding/Deleting vertices is done.
+	- Adding edges now works flawlessly!!
+
+To Do:
+	- The rest is actually burning vertices!
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+September 4
+
+Drawing is finally done, but the algorithm doesn't work right.
+It is not doing things in the right order, and is not picking
+a random vertex every round!
+
+Maybe the maxDepth is wrong? Something is up...
+
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+September 8
+
+I have noticed a weird mistake with this algorithm. Maybe I
+implemented it wrong? Since it tries to guarantee that the algorithm
+will run in 'g' rounds, it may try to perform the algorithm without
+choosing any random vertices. Ex. some graphs need 3 rounds minimum.
+But it will run 2 rounds, fail, then run 4 rounds, which will pretty
+much just run a BFS. Really weird??
+
+We're almost there, still some weird behaviour going on.
+Two vertices connected to the same neighbor will NOT burn at the
+same round. Why is this? Need to fix. Probably the last one...
+
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+September 13
+
+I have decided at this point I am done for now. It seems to work fine
+in most cases so that's good (earlier problems were most likely
+due to the choice of the minimum round variable).
+Of course this is nowhere near where I envisioned it.
+
+There were many limitations with WebGL through p5.js and found that many
+of the features I hoped to use were not supported. It is what it is.
+
+In the future, if I were to improve this:
+
+1. Save/load graphs.
+2. Number the vertices (couldn't do this due to WebGL).
+3. Better textures (again WebGL limited this).
+4. Make the vertices moveable. The click events of P5.js were a little
+   funny, so I didn't want to implement this.
+5. Improve the edge add functionality. Right now it is really slow
+   and tedious.
+6. Adding different algorithms.
+7. Buttons / Selection for random graphs and different types.
+8. Probably should have made the classes a little better.
+   For example, not all classes have print() methods. But school work is
+   a problem, so no time right now.
+9. Reset the graph so you don't have to refresh.
+10. The algorithm could have been faster if I made better design decision.
+   Using a LL is slow, needs fast access for random vertices instead of
+   linear search.
+
+So there is much hope, hopefully one day it couly help myself or someone.
+
+However, still learned a bit, so that's good.
+
+Thanks for taking a look.
+
+
+
+
+
+
+
