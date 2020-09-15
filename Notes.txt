@@ -8,6 +8,53 @@
 // 
 //////////////////////////////////////////////////////////////////
 
+To use the program:
+
+ADD: Click the add button and then click anywhere on the canvas.
+     This should add a vertex to the world.
+
+DELETE: Select a vertex by clicking on it and click delete. This
+        will delete the vertex along with all associated edges.
+
+ADD EDGE: To add an edge, select the first vertex, press ADD EDGE,
+          then select the second vertex, and press ADD EDGE again.
+
+RUN ALG: Runs the approximation algorithm for burning graphs.
+
+NEXT: Goes to the next stage in burning, only works after RUN ALG
+      has been used.
+
+STEP BACK: Goes to the previous stage in burning, only works
+           after RUN ALG has been used.
+
+STEP BUTTONS: 1x, 5x, 20x, 50x
+	These allow you to skip stages in the burning process.
+	Enables faster navigation through the stages.
+
+
+
+APPROXIMATION ALGORITHM:
+
+	Pretty simple. We start with a desired minimum # of rounds.
+	Then run a BFS from a random vertex until we reach a depth
+	that equals the minimum # of rounds. Once that is reached
+	or the BFS has no neighbors in its queue left, run another
+	BFS from a random node that is unvisited.
+
+	When there are no more nodes, check if the number of BFS's
+	ran was more than the minimum # of rounds.
+
+	If it was, redo with a higher minimum.
+	Else, we have a good sequence.
+
+//////////////////////////////////////////////////////////////////
+
+NOTES
+
+//////////////////////////////////////////////////////////////////
+
+
+
 FIRST QUESTIONS: AUGUST 4, 2020
 
 1. When graphs are randomly generated, what are the positions of
