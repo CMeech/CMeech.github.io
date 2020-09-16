@@ -13,21 +13,21 @@
 "use strict";
 
 //textures
-let backgroundText; //these should be in CAPS_SPACE
-let vertexTexture;
-let vertexTextureSel;
-let burnedTexture;
-let burnedTextureSel;
-let addText;
-let delText;
-let edgeText;
-let algText;
-let nextText;
-let backText;
-let fiftyText;
-let twentyText;
-let fiveText;
-let oneText;
+let BACKGROUND_TEXT; //these should be in CAPS_SPACE
+let VERTEX_TEXTURE;
+let VERTEX_TEXTURE_SEL;
+let BURNED_TEXT;
+let BURNED_TEXT_SEL;
+let ADD_TEXT;
+let DEL_TEXT;
+let EDGE_TEXT;
+let ALG_TEXT;
+let NEXT_TEXT;
+let BACK_TEXT;
+let FIFTY_TEXT;
+let TWENTY_TEXT;
+let FIVE_TEXT;
+let ONE_TEXT;
 
 let LEFT_EDGE = -1; //canvas stuff
 let RIGHT_EDGE  = 1;
@@ -604,10 +604,10 @@ class Vertex extends Shape{
         noStroke();
         textureWrap(CLAMP);
         if(this.getSelected()){
-          texture(vertexTextureSel);
+          texture(VERTEX_TEXTURE_SEL);
         }
         else{
-          texture(vertexTexture);
+          texture(VERTEX_TEXTURE);
         } */
 
         push();
@@ -1143,7 +1143,7 @@ class Background extends Shape{
 
         beginShape();
         //background is just a square with a texture
-        texture(backgroundText); //global constant
+        texture(BACKGROUND_TEXT); //global constant
         textureWrap(REPEAT);
         vertex(LEFT_EDGE*BACKGROUND_FACTOR,BOTTOM_EDGE*BACKGROUND_FACTOR,CENTER,CENTER); //bottom left, CCW, Need UV coordinates for texture mapping
         vertex(RIGHT_EDGE*BACKGROUND_FACTOR,BOTTOM_EDGE*BACKGROUND_FACTOR,BACKGROUND_UV,CENTER);
@@ -1204,7 +1204,7 @@ class SimUserInterface{
         this.textList = new LinkedList();
         this.selectedButton = null;
         this.addUIShapes();
-        this.addTextShapes();
+        this.ADD_TEXTShapes();
     }
 
 
@@ -1230,23 +1230,23 @@ class SimUserInterface{
         this.shapeList.addEnd(new ButtonItem(new Button(LEFT_EDGE + ((FIF_WID - 3*FACTOR)/2.0), BOTTOM_EDGE + (FIF_WID) + (FIF_WID-FACTOR) + (FIF_WID-2*FACTOR) + (FIF_WID-3*FACTOR)/2.0, PURP_4,FIF_WID-3*FACTOR,FIF_WID-3*FACTOR, OPERATIONS.ONE))); 
     }
 
-    addTextShapes(){
+    ADD_TEXTShapes(){
         //THE ORDER IS:
         // 1 - ADD, 2 - DEL, 3 - EDGE, 4 - ALG, 5 - NEXT, 6 - BACK,
         // 7 - 50x, 8 - 20x, 9 - 5x, 10 - 1x,
 
-        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + (BIG_WIDTH/2.0), TOP_EDGE - (BIG_HEIGHT/2.0), addText, BIG_WIDTH, BIG_HEIGHT))); //add
-        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + (BIG_WIDTH/2.0) + (BIG_WIDTH), TOP_EDGE - (BIG_HEIGHT/2.0), delText, BIG_WIDTH, BIG_HEIGHT))); //del
-        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + (BIG_WIDTH/2.0) + (2*BIG_WIDTH), TOP_EDGE - (BIG_HEIGHT/2.0), edgeText, BIG_WIDTH, BIG_HEIGHT))); //edge
-        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + (BIG_WIDTH/2.0) + (3*BIG_WIDTH), TOP_EDGE - (BIG_HEIGHT/2.0), algText, BIG_WIDTH, BIG_HEIGHT))); //alg
+        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + (BIG_WIDTH/2.0), TOP_EDGE - (BIG_HEIGHT/2.0), ADD_TEXT, BIG_WIDTH, BIG_HEIGHT))); //add
+        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + (BIG_WIDTH/2.0) + (BIG_WIDTH), TOP_EDGE - (BIG_HEIGHT/2.0), DEL_TEXT, BIG_WIDTH, BIG_HEIGHT))); //del
+        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + (BIG_WIDTH/2.0) + (2*BIG_WIDTH), TOP_EDGE - (BIG_HEIGHT/2.0), EDGE_TEXT, BIG_WIDTH, BIG_HEIGHT))); //edge
+        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + (BIG_WIDTH/2.0) + (3*BIG_WIDTH), TOP_EDGE - (BIG_HEIGHT/2.0), ALG_TEXT, BIG_WIDTH, BIG_HEIGHT))); //alg
 
-        this.textList.addEnd(new ShapeItem(new Text((BIG_WIDTH/2.0), BOTTOM_EDGE + (BIG_HEIGHT/2.0), nextText, BIG_WIDTH, BIG_HEIGHT))); //next
-        this.textList.addEnd(new ShapeItem(new Text((BIG_WIDTH/2.0) + (BIG_WIDTH), BOTTOM_EDGE + (BIG_HEIGHT/2.0), backText, BIG_WIDTH, BIG_HEIGHT))); //back
+        this.textList.addEnd(new ShapeItem(new Text((BIG_WIDTH/2.0), BOTTOM_EDGE + (BIG_HEIGHT/2.0), NEXT_TEXT, BIG_WIDTH, BIG_HEIGHT))); //next
+        this.textList.addEnd(new ShapeItem(new Text((BIG_WIDTH/2.0) + (BIG_WIDTH), BOTTOM_EDGE + (BIG_HEIGHT/2.0), BACK_TEXT, BIG_WIDTH, BIG_HEIGHT))); //back
 
-        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + (FIF_WID/2.0), BOTTOM_EDGE + (FIF_WID/2.0), fiftyText, FIF_WID,FIF_WID))); //50
-        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + ((FIF_WID - FACTOR)/2.0), BOTTOM_EDGE + (FIF_WID) + (FIF_WID-FACTOR)/2.0, twentyText, FIF_WID-FACTOR,FIF_WID-FACTOR))); //20
-        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + ((FIF_WID - 2*FACTOR)/2.0), BOTTOM_EDGE + (FIF_WID) + (FIF_WID-FACTOR) + (FIF_WID-2*FACTOR)/2.0, fiveText, FIF_WID-2*FACTOR,FIF_WID-2*FACTOR))); //5
-        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + ((FIF_WID - 3*FACTOR)/2.0), BOTTOM_EDGE + (FIF_WID) + (FIF_WID-FACTOR) + (FIF_WID-2*FACTOR) + (FIF_WID-3*FACTOR)/2.0, oneText, FIF_WID-3*FACTOR,FIF_WID-3*FACTOR))); //1
+        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + (FIF_WID/2.0), BOTTOM_EDGE + (FIF_WID/2.0), FIFTY_TEXT, FIF_WID,FIF_WID))); //50
+        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + ((FIF_WID - FACTOR)/2.0), BOTTOM_EDGE + (FIF_WID) + (FIF_WID-FACTOR)/2.0, TWENTY_TEXT, FIF_WID-FACTOR,FIF_WID-FACTOR))); //20
+        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + ((FIF_WID - 2*FACTOR)/2.0), BOTTOM_EDGE + (FIF_WID) + (FIF_WID-FACTOR) + (FIF_WID-2*FACTOR)/2.0, FIVE_TEXT, FIF_WID-2*FACTOR,FIF_WID-2*FACTOR))); //5
+        this.textList.addEnd(new ShapeItem(new Text(LEFT_EDGE + ((FIF_WID - 3*FACTOR)/2.0), BOTTOM_EDGE + (FIF_WID) + (FIF_WID-FACTOR) + (FIF_WID-2*FACTOR) + (FIF_WID-3*FACTOR)/2.0, ONE_TEXT, FIF_WID-3*FACTOR,FIF_WID-3*FACTOR))); //1
 
 
     }
@@ -1631,21 +1631,21 @@ class SimController{
 let sim; //the outer object
 
 function preload(){
-    backgroundText = loadImage('https://i.imgur.com/oVX5j1D.png');
-    vertexTexture = loadImage('https://i.imgur.com/BUiZQUQ.png');
-    vertexTextureSel = loadImage('https://i.imgur.com/Et4TpDp.png');
-    burnedTexture = loadImage('https://i.imgur.com/Ok6cv8c.png');
-    burnedTextureSel = loadImage('https://i.imgur.com/FrKvrmI.png');
-    addText = loadImage('https://i.imgur.com/DI2ecNn.png');
-    delText = loadImage('https://i.imgur.com/hWUNvn3.png');
-    edgeText = loadImage('https://i.imgur.com/3QmWvAZ.png');
-    algText = loadImage('https://i.imgur.com/AmSFP8O.png');
-    nextText = loadImage('https://i.imgur.com/ep8y7iK.png');
-    backText = loadImage('https://i.imgur.com/lBho1K5.png');
-    fiftyText = loadImage('https://i.imgur.com/SG3YRP9.png');
-    twentyText = loadImage('https://i.imgur.com/hBtV21V.png');
-    fiveText = loadImage('https://i.imgur.com/1ogH2Fj.png');
-    oneText = loadImage('https://i.imgur.com/29ykvwg.png');
+    BACKGROUND_TEXT = loadImage('https://i.imgur.com/oVX5j1D.png');
+    VERTEX_TEXTURE = loadImage('https://i.imgur.com/BUiZQUQ.png');
+    VERTEX_TEXTURE_SEL = loadImage('https://i.imgur.com/Et4TpDp.png');
+    BURNED_TEXT = loadImage('https://i.imgur.com/Ok6cv8c.png');
+    BURNED_TEXT_SEL = loadImage('https://i.imgur.com/FrKvrmI.png');
+    ADD_TEXT = loadImage('https://i.imgur.com/DI2ecNn.png');
+    DEL_TEXT = loadImage('https://i.imgur.com/hWUNvn3.png');
+    EDGE_TEXT = loadImage('https://i.imgur.com/3QmWvAZ.png');
+    ALG_TEXT = loadImage('https://i.imgur.com/AmSFP8O.png');
+    NEXT_TEXT = loadImage('https://i.imgur.com/ep8y7iK.png');
+    BACK_TEXT = loadImage('https://i.imgur.com/lBho1K5.png');
+    FIFTY_TEXT = loadImage('https://i.imgur.com/SG3YRP9.png');
+    TWENTY_TEXT = loadImage('https://i.imgur.com/hBtV21V.png');
+    FIVE_TEXT = loadImage('https://i.imgur.com/1ogH2Fj.png');
+    ONE_TEXT = loadImage('https://i.imgur.com/29ykvwg.png');
 
     //must define color constants here
 
